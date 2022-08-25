@@ -13,7 +13,6 @@ const createUser = async (data) => {
   try {
     await User.create({ displayName, email, password, image });
     const token = generateToken({ email });
-    console.log(token);
 
     return token;
   } catch (err) {
@@ -21,4 +20,12 @@ const createUser = async (data) => {
   }
 };
 
-module.exports = { loginUser, createUser };
+const allUsers = async () => {
+  const users = await User.findAll();
+  const usersUpdated = users
+    .map(({ id, displayName, email, image }) => ({ id, displayName, email, image }));
+  
+  return usersUpdated;
+};
+
+module.exports = { loginUser, createUser, allUsers };
