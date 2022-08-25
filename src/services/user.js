@@ -28,4 +28,10 @@ const allUsers = async () => {
   return usersUpdated;
 };
 
-module.exports = { loginUser, createUser, allUsers };
+const userById = async (userId) => {
+  const { id, displayName, email, image } = await User.findByPk(userId);
+
+  return { id, displayName, email, image };
+};
+
+module.exports = { loginUser, createUser, allUsers, userById };

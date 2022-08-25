@@ -1,5 +1,15 @@
 const { User } = require('../database/models');
 
+const validateUserById = async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findByPk(id);
+  if (!user) {
+    return res.status(404).json({ message: 'User does not exist' });
+  }
+
+  next();
+};
+
 const userExists = async (req, res, next) => {
   const { email } = req.body;
 
@@ -62,4 +72,4 @@ const validateFieldsUser = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateFieldsLogin, validateFieldsUser, userExists };
+module.exports = { validateFieldsLogin, validateFieldsUser, userExists, validateUserById };
