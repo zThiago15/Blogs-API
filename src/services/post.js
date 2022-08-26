@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory } = require('../database/models');
+const { BlogPost, PostCategory, Category, User } = require('../database/models');
 
 const createPost = async (data) => {
   const { title, content, categoryIds } = data;
@@ -19,4 +19,12 @@ const createPost = async (data) => {
   return blogPostCreated;
 };
 
-module.exports = { createPost };
+const getAllPosts = async () => {
+  const posts = await BlogPost.findAll({
+    include: [{ model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  return posts;
+};
+
+module.exports = { createPost, getAllPosts };

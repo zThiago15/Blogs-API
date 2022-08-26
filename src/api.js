@@ -1,6 +1,6 @@
 const express = require('express');
 const { createCategory, getCategories } = require('./controllers/category');
-const { createPost } = require('./controllers/post');
+const { createPost, getAllPosts } = require('./controllers/post');
 const { loginUser, createUser, allUsers, userById } = require('./controllers/user');
 const { validateNameField } = require('./middlewares/validateCategory');
 const { validatePostFields } = require('./middlewares/validatePost');
@@ -21,6 +21,7 @@ app.post('/categories', validateToken, validateNameField, createCategory);
 app.get('/categories', validateToken, getCategories);
 
 app.post('/post', validateToken, validatePostFields, createPost);
+app.get('/post', validateToken, getAllPosts);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
