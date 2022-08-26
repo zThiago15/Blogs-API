@@ -2,7 +2,8 @@ const postServices = require('../services/post');
 
 const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
-  const postCreated = await postServices.createPost({ title, content, categoryIds });
+  const token = req.headers.authorization;
+  const postCreated = await postServices.createPost({ title, content, categoryIds }, token);
 
   return res.status(201).json(postCreated);
 };
@@ -19,4 +20,13 @@ const getById = async (req, res) => {
   return res.status(200).json(post[0]);
 };
 
-module.exports = { createPost, getAllPosts, getById };
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const postUpdated = await postServices.updatePost({ title, content, id });
+  
+  return res.status(200).json(postUpdated);
+};
+
+module.exports = { createPost, getAllPosts, getById, updatePost };

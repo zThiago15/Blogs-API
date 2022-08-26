@@ -1,4 +1,6 @@
-const { Category, BlogPost } = require('../database/models');
+const jwt = require('jsonwebtoken');
+const { Category, BlogPost, User } = require('../database/models');
+require('dotenv').config();
 
 const validatePostFields = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
@@ -28,4 +30,34 @@ const validatePostExists = async (req, res, next) => {
   next();
 };
 
-module.exports = { validatePostFields, validatePostExists };
+const validateFieldsToUpdate = async (req, res, next) => {
+  const { title, content } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+
+  next();
+};
+
+const validatePostOwner = async (req, res, next) => {
+  const { id } = req.params;
+  
+  const { authorization } = req.headers;
+  const { email } = jwt.verify(authorization, process.env.JWT_SECRET);
+
+  const [{ userId }] = await BlogPost.findAll({ where: { id }, attributes: ['userId'] });
+
+  // verifica se usuário do post possui o mesmo e-mail do token
+  const userOwner = await User.findAll({ where: { id: userId, email } });
+  if (userOwner.length === 0) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  next();
+};
+
+module.exports = { 
+  validatePostFields, 
+  validatePostExists, 
+  validateFieldsToUpdate, 
+  validatePostOwner };
