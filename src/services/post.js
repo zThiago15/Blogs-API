@@ -46,7 +46,7 @@ const getById = async (id) => {
 const updatePost = async ({ title, content, id }) => {
   await BlogPost.update({ title, content }, { where: { id } });
 
-  const [postUpdated] = await getById(id);
+  const postUpdated = await getById(id);
 
   return postUpdated;
 };
