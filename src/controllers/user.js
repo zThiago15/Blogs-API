@@ -27,4 +27,12 @@ const userById = async (req, res) => {
   return res.status(200).json(user);
 };
 
-module.exports = { loginUser, createUser, allUsers, userById };
+const removeUser = async (req, res) => {
+  const token = req.headers.authorization;
+
+  await userServices.removeUser(token);
+
+  return res.status(204).end();
+};
+
+module.exports = { loginUser, createUser, allUsers, userById, removeUser };

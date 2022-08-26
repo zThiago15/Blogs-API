@@ -1,7 +1,7 @@
 const express = require('express');
 const { createCategory, getCategories } = require('./controllers/category');
 const { createPost, getAllPosts, getById, updatePost, deletePost } = require('./controllers/post');
-const { loginUser, createUser, allUsers, userById } = require('./controllers/user');
+const { loginUser, createUser, allUsers, userById, removeUser } = require('./controllers/user');
 const { validateNameField } = require('./middlewares/validateCategory');
 const { validatePostFields, validatePostExists, 
   validateFieldsToUpdate, validatePostOwner } = require('./middlewares/validatePost');
@@ -17,6 +17,7 @@ app.post('/login', validateFieldsLogin, loginUser);
 app.post('/user', validateFieldsUser, userExists, createUser);
 app.get('/user', validateToken, allUsers);
 app.get('/user/:id', validateToken, validateUserById, userById);
+app.delete('/user/me', validateToken, removeUser);
 
 app.post('/categories', validateToken, validateNameField, createCategory);
 app.get('/categories', validateToken, getCategories);

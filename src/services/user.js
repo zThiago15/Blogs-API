@@ -1,5 +1,7 @@
 const { generateToken } = require('../helpers/generateToken');
 const { User } = require('../database/models');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const loginUser = (email) => {
   const token = generateToken({ email });
@@ -34,4 +36,12 @@ const userById = async (userId) => {
   return { id, displayName, email, image };
 };
 
-module.exports = { loginUser, createUser, allUsers, userById };
+const removeUser = async (token) => {
+  const { email } = jwt.verify(token, process.env.JWT_SECRET);
+  const [{ id }] = await User.findAll({ where: { email } });
+  
+  await User.destroy({ where: { id } });
+  return true;
+};
+
+module.exports = { loginUser, createUser, allUsers, userById, removeUser };
