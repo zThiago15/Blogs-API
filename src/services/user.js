@@ -1,6 +1,6 @@
+const jwt = require('jsonwebtoken');
 const { generateToken } = require('../helpers/generateToken');
 const { User } = require('../database/models');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const loginUser = (email) => {

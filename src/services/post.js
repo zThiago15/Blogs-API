@@ -84,9 +84,9 @@ const searchPost = async (q) => {
   const posts = await executeSearch(q);
   const getInfosPost = posts.map(async ({ id }) => getById(id));
 
-  const editedPosts = await Promise.all(getInfosPost);
+  const resolvePosts = await Promise.all(getInfosPost);
 
-   return editedPosts;
+   return resolvePosts;
 };
 
 module.exports = { createPost, getAllPosts, getById, updatePost, deletePost, searchPost };
