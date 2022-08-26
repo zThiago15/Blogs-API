@@ -1,6 +1,6 @@
 const express = require('express');
 const { createCategory, getCategories } = require('./controllers/category');
-const { createPost, getAllPosts, getById, updatePost, deletePost } = require('./controllers/post');
+const { createPost, getAllPosts, getById, updatePost, deletePost, searchPost } = require('./controllers/post');
 const { loginUser, createUser, allUsers, userById, removeUser } = require('./controllers/user');
 const { validateNameField } = require('./middlewares/validateCategory');
 const { validatePostFields, validatePostExists, 
@@ -24,6 +24,7 @@ app.get('/categories', validateToken, getCategories);
 
 app.post('/post', validateToken, validatePostFields, createPost);
 app.get('/post', validateToken, getAllPosts);
+app.get('/post/search', validateToken, searchPost);
 app.get('/post/:id', validateToken, validatePostExists, getById);
 app.put('/post/:id', validateToken, validateFieldsToUpdate, 
  validatePostOwner, updatePost);

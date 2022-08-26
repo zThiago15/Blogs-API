@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost, PostCategory, Category, User } = require('../database/models');
+const { BlogPost, PostCategory, Category, User, Sequelize } = require('../database/models');
 require('dotenv').config();
 
 const createPost = async (data, token) => {
@@ -34,7 +34,7 @@ const getAllPosts = async () => {
 };
 
 const getById = async (id) => {
-  const post = await BlogPost.findAll({
+  const [post] = await BlogPost.findAll({
     where: { id },
     include: [{ model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
       { model: Category, as: 'categories', through: { attributes: [] } }],
@@ -57,4 +57,36 @@ const deletePost = async (id) => {
   return true;
 };
 
-module.exports = { createPost, getAllPosts, getById, updatePost, deletePost };
+const executeSearch = async (q) => {
+  // Op.or - https://stackoverflow.com/questions/20695062/sequelize-or-condition-object
+  const { Op } = Sequelize;
+
+  const posts = await BlogPost.findAll({ 
+    where: {
+      [Op.or]: [
+        {
+          title: {
+            [Op.like]: `%${q}%`,
+          },
+        },
+        {
+        content: {
+          [Op.like]: `%${q}%`,
+          },
+        },
+      ],
+    },
+   });
+   return posts;
+};
+
+const searchPost = async (q) => {
+  const posts = await executeSearch(q);
+  const getInfosPost = posts.map(async ({ id }) => getById(id));
+
+  const editedPosts = await Promise.all(getInfosPost);
+
+   return editedPosts;
+};
+
+module.exports = { createPost, getAllPosts, getById, updatePost, deletePost, searchPost };

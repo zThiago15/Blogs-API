@@ -17,7 +17,7 @@ const getById = async (req, res) => {
   const { id } = req.params;
   const post = await postServices.getById(id);
 
-  return res.status(200).json(post[0]);
+  return res.status(200).json(post);
 };
 
 const updatePost = async (req, res) => {
@@ -36,4 +36,11 @@ const deletePost = async (req, res) => {
   return res.status(204).end();
 };
 
-module.exports = { createPost, getAllPosts, getById, updatePost, deletePost };
+const searchPost = async (req, res) => {
+  const { q } = req.query;
+  const foundedPosts = await postServices.searchPost(q);
+
+  return res.status(200).json(foundedPosts);
+};
+
+module.exports = { createPost, getAllPosts, getById, updatePost, deletePost, searchPost };
