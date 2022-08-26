@@ -46,10 +46,7 @@ const getById = async (id) => {
 const updatePost = async ({ title, content, id }) => {
   await BlogPost.update({ title, content }, { where: { id } });
 
-  const postUpdated = await BlogPost.findAll({ where: { id } }, {
-    include: [{ model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
-      { model: Category, as: 'categories', through: { attributes: [] } }],
-  });
+  const [postUpdated] = await getById(id);
 
   return postUpdated;
 };
