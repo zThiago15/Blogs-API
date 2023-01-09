@@ -177,6 +177,35 @@
           }
         },
         "responses": {
+          "tags": ["Posts"],
+          "summary": "List posts",
+          "description": "List all posts registered",
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "example": [
+                  {
+                    "title": "Blog title",
+                    "content": "Blog content",
+                    "category": "Blog category"
+                  },
+                  {
+                    "title": "Blog title2",
+                    "content": "Blog content2",
+                    "category": "Blog category2"
+                  }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "responses": {
           "201": {
             "description": "Created",
             "content": {
