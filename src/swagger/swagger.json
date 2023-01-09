@@ -258,6 +258,38 @@
           }
         }
       }
+    },
+    "post/{id}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Find a post",
+        "description": "Find a post by id",
+        "parameters": [
+          { "in": "/post/{id}",
+           "required": true,
+           "name": "id",
+           "schema": {
+             "type": "string"
+           }}
+         ],
+         "responses": {
+           "200": {
+             "description": "OK",
+             "content": {
+               "application/json":{
+                 "schema": {
+                   "type": "object",
+                   "example": [{
+                     "displayName": "Post name",
+                     "email": "email user",
+                     "image": "Post image"
+                   }]
+                 }
+               }
+             }
+           }
+         }
+      }
     }
   },
   "definitions": {
