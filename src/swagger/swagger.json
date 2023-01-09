@@ -205,19 +205,53 @@
         }
       },
       "get": {
+        "tags": ["Posts"],
+        "summary": "Get posts",
+        "description": "Get all posts",
         "responses": {
-          "201": {
-            "description": "Created",
+          "200": {
+            "description": "OK",
             "content": {
               "application/json":{
                 "schema": {
                   "type": "object",
                   "example": {
                     "id": "1",
-                    "title": "Blog title",
-                    "content": "Blog content",
+                    "title": "Post title",
+                    "content": "Post content",
                     "categoryId": "2"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/post/search": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Search post",
+        "description": "Search for a post",
+        "parameters":[
+         { "in": "query",
+          "required": true,
+          "name": "q",
+          "schema": {
+            "type": "string"
+          }}
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "example": [{
+                    "title": "Post title",
+                    "content": "Post content"
+                  }]
                 }
               }
             }
