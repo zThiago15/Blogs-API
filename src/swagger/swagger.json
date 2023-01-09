@@ -1,0 +1,184 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Blogs API",
+    "description": "Rest API to manage Blogs",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User login",
+        "description": "Login of a user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Login"
+                },
+                "example": {
+                  "email": "thiago@gmail.com",
+                  "password": "test123"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "token": "$45239gb3f3h2f8"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create user",
+        "description": "Creation of a user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/User creation"
+                },
+                "example": {
+                  "displayName": "Thiago Dias",
+                  "email": "thiagodias@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "example": {
+                  "token": "$45239gb3f3h2f8"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List users",
+        "description": "List of all the users registered",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "example": {
+                  "users": ["user1", "user2", "user3"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "List user",
+        "description": "Find and return a user by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "example": {
+                  "users": ["user1", "user2", "user3"]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+         { "in": "/user/{id}",
+          "required": true,
+          "name": "id",
+          "schema": {
+            "type": "string"
+          }}
+        ]
+      }
+    },
+    "/user/me": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "delete user",
+        "description": "delete user by its token",
+        "parameters":[
+          { "in": "header",
+          "name": "authorization",
+          "schema": {
+            "type": "string"
+          }}
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "User creation": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
