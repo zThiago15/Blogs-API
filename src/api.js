@@ -1,4 +1,7 @@
+const swaggerUiExpress = require('swagger-ui-express');
 const express = require('express');
+const swaggerFile = require('./swagger/swagger.json');
+
 const { createCategory, getCategories } = require('./controllers/category');
 const { createPost, getAllPosts, getById, updatePost, 
   deletePost, searchPost } = require('./controllers/post');
@@ -13,6 +16,8 @@ const { validateFieldsLogin,
 const app = express();
 
 app.use(express.json());
+
+app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerFile));
 
 app.post('/login', validateFieldsLogin, loginUser);
 app.post('/user', validateFieldsUser, userExists, createUser);
@@ -31,6 +36,4 @@ app.put('/post/:id', validateToken, validateFieldsToUpdate,
  validatePostOwner, updatePost);
 app.delete('/post/:id', validateToken, validatePostExists, validatePostOwner, deletePost);
 
-// É importante exportar a constante `app`,
-// para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;
