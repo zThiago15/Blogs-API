@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Blogs API",
-    "description": "Rest API to manage Blogs",
+    "description": "Rest API to manage Users, posts and categories",
     "version": "1.0.0"
   },
   "paths": {
@@ -152,6 +152,274 @@
           }
         }
       }
+    },
+    "/post": {
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Create post",
+        "description": "Create a post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Post"
+                },
+                "example": {
+                  "title": "Blog title",
+                  "content": "Blog content",
+                  "categoryId": "2"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "tags": ["Posts"],
+          "summary": "List posts",
+          "description": "List all posts registered",
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "example": [
+                  {
+                    "title": "Blog title",
+                    "content": "Blog content",
+                    "category": "Blog category"
+                  },
+                  {
+                    "title": "Blog title2",
+                    "content": "Blog content2",
+                    "category": "Blog category2"
+                  }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get posts",
+        "description": "Get all posts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "id": "1",
+                    "title": "Post title",
+                    "content": "Post content",
+                    "categoryId": "2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/post/search": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Search post",
+        "description": "Search for a post",
+        "parameters":[
+         { "in": "query",
+          "required": true,
+          "name": "q",
+          "schema": {
+            "type": "string"
+          }}
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "example": [{
+                    "title": "Post title",
+                    "content": "Post content"
+                  }]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "post/{id}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Find a post",
+        "description": "Find a post by id",
+        "parameters": [
+          { "in": "/post/{id}",
+           "required": true,
+           "name": "id",
+           "schema": {
+             "type": "string"
+           }}
+         ],
+         "responses": {
+           "200": {
+             "description": "OK",
+             "content": {
+               "application/json":{
+                 "schema": {
+                   "type": "object",
+                   "example": [{
+                     "displayName": "Post name",
+                     "email": "email user",
+                     "image": "Post image"
+                   }]
+                 }
+               }
+             }
+           }
+         }
+      },
+      "put": {
+        "tags": ["Posts"],
+        "summary": "Edit a post",
+        "description": "Edit a post by id",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Post"
+                },
+                "example": {
+                  "title": "Blog title",
+                  "content": "Blog content"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          { "in": "/post/{id}",
+           "required": true,
+           "name": "id",
+           "schema": {
+             "type": "string"
+           }}
+         ],
+         "responses": {
+           "200": {
+             "description": "OK",
+             "content": {
+               "application/json":{
+                 "schema": {
+                   "type": "object",
+                   "example": [{
+                     "displayName": "Post name",
+                     "email": "email user",
+                     "image": "Post image"
+                   }]
+                 }
+               }
+             }
+           }
+         }
+      },
+      "delete": {
+        "tags": ["Posts"],
+        "summary": "Delete a post",
+        "description": "Delete a post by id",
+        "parameters": [
+          { "in": "/post/{id}",
+           "required": true,
+           "name": "id",
+           "schema": {
+             "type": "string"
+           }}
+         ],
+         "responses": {
+           "204": {
+             "description": "No content"
+           }
+         }
+      }
+    },
+    "/categories": {
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create category",
+        "description": "Create a category",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Category"
+                },
+                "example": {
+                  "name": "Category name"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "id": "1",
+                    "name": "category name"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List categories",
+        "description": "List all categories registered",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "example": [{
+                      "id": "1",
+                      "name": "category name"
+                    },
+                    {
+                      "id": "2",
+                      "name": "category name2"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -176,6 +444,28 @@
           "type": "string"
         },
         "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Post": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "categoryIds": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties":{
+        "name": {
           "type": "string"
         }
       }
