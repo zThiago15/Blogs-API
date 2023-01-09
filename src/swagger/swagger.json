@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Blogs API",
-    "description": "Rest API to manage Blogs",
+    "description": "Rest API to manage Users, posts and categories",
     "version": "1.0.0"
   },
   "paths": {
@@ -355,6 +355,30 @@
            }
          }
       }
+    },
+    "/categories": {
+      "tags": ["Categories"],
+      "summary": "Create category",
+      "description": "Create a category",
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Category"
+                },
+                "example": {
+                  "name": "Category name"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {}
     }
   },
   "definitions": {
@@ -393,6 +417,14 @@
           "type": "string"
         },
         "categoryIds": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties":{
+        "name": {
           "type": "string"
         }
       }
