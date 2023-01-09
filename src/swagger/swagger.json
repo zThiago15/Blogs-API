@@ -336,6 +336,24 @@
              }
            }
          }
+      },
+      "delete": {
+        "tags": ["Posts"],
+        "summary": "Delete a post",
+        "description": "Delete a post by id",
+        "parameters": [
+          { "in": "/post/{id}",
+           "required": true,
+           "name": "id",
+           "schema": {
+             "type": "string"
+           }}
+         ],
+         "responses": {
+           "204": {
+             "description": "No content"
+           }
+         }
       }
     }
   },
