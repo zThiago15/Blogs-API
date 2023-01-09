@@ -384,10 +384,36 @@
               "application/json":{
                 "schema": {
                   "type": "object",
-                  "example": [{
+                  "example": {
                     "id": "1",
                     "name": "category name"
-                  }]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List categories",
+        "description": "List all categories registered",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "example": [{
+                      "id": "1",
+                      "name": "category name"
+                    },
+                    {
+                      "id": "2",
+                      "name": "category name2"
+                    }
+                  ]
                 }
               }
             }
