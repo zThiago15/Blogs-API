@@ -152,6 +152,49 @@
           }
         }
       }
+    },
+    "/post": {
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Create post",
+        "description": "Create a post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Post"
+                },
+                "example": {
+                  "title": "Blog title",
+                  "content": "Blog content",
+                  "categoryId": "2"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "id": "1",
+                    "title": "Blog title",
+                    "content": "Blog content",
+                    "categoryId": "2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -176,6 +219,20 @@
           "type": "string"
         },
         "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Post": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "categoryIds": {
           "type": "string"
         }
       }
