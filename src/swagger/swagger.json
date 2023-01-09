@@ -289,6 +289,53 @@
              }
            }
          }
+      },
+      "put": {
+        "tags": ["Posts"],
+        "summary": "Edit a post",
+        "description": "Edit a post by id",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "$ref": "#/definitions/Post"
+                },
+                "example": {
+                  "title": "Blog title",
+                  "content": "Blog content"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          { "in": "/post/{id}",
+           "required": true,
+           "name": "id",
+           "schema": {
+             "type": "string"
+           }}
+         ],
+         "responses": {
+           "200": {
+             "description": "OK",
+             "content": {
+               "application/json":{
+                 "schema": {
+                   "type": "object",
+                   "example": [{
+                     "displayName": "Post name",
+                     "email": "email user",
+                     "image": "Post image"
+                   }]
+                 }
+               }
+             }
+           }
+         }
       }
     }
   },
