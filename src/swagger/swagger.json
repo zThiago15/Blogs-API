@@ -357,10 +357,10 @@
       }
     },
     "/categories": {
-      "tags": ["Categories"],
-      "summary": "Create category",
-      "description": "Create a category",
       "post": {
+        "tags": ["Categories"],
+        "summary": "Create category",
+        "description": "Create a category",
         "requestBody": {
           "required": true,
           "content": {
@@ -376,9 +376,24 @@
               }
             }
           }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "example": [{
+                    "id": "1",
+                    "name": "category name"
+                  }]
+                }
+              }
+            }
+          }
         }
-      },
-      "get": {}
+      }
     }
   },
   "definitions": {
