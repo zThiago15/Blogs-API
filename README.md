@@ -12,6 +12,7 @@
   - Sequelize (ORM)
   - Docker
   - JWT (JSON Web Token)
+  - Swagger(documentation)
 
   ## Installation 🚀
   Clone the repository: git clone https://github.com/zThiago15/Blogs-API.git
@@ -40,6 +41,7 @@ API Rest de posts, usuários e categorias para realizar o gerenciamento de conte
 * Sequelize(ORM)
 * Docker
 * JWT(JSON Web Token)
+* Swagger(documentação)
 
 ---
 
